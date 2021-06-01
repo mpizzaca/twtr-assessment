@@ -1,6 +1,16 @@
-`npm run dev`
+Simple twitter API clone. Utilizes JSON Web Tokens for user authentication and session management.
 
-Start server in development mode (using nodemon)
+---
+
+## Commands
+
+`npm run dev`: start server in development mode using nodemon
+
+`npm test`: run mocha/chai test suite
+
+---
+
+## API Documentation
 
 ## `POST /login`
 
