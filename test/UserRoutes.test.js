@@ -8,7 +8,7 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 describe("UserRoutes", () => {
-  // clear users collection
+  // clear users collection before running tests
   before((done) => {
     User.deleteMany({}).then(() => done());
   });
@@ -21,6 +21,7 @@ describe("UserRoutes", () => {
         .send({ username: "testuser", password: "testpass" })
         .end((err, res) => {
           expect(res).to.have.status(201);
+          expect(res.body).to.haveOwnProperty("token");
           done();
         });
     });
@@ -32,6 +33,7 @@ describe("UserRoutes", () => {
         .send({ username: "testuser", password: "testpass" })
         .end((err, res) => {
           expect(res).to.have.status(400);
+          expect(res.body).to.not.haveOwnProperty("token");
           expect(res.body.message).to.equal("user already exists");
           done();
         });
@@ -44,6 +46,7 @@ describe("UserRoutes", () => {
         .send({ username: "TeStUsEr", password: "testpass" })
         .end((err, res) => {
           expect(res).to.have.status(400);
+          expect(res.body).to.not.haveOwnProperty("token");
           expect(res.body.message).to.equal("user already exists");
           done();
         });
@@ -56,6 +59,7 @@ describe("UserRoutes", () => {
         .send({ password: "testpass" })
         .end((err, res) => {
           expect(res).to.have.status(400);
+          expect(res.body).to.not.haveOwnProperty("token");
           expect(res.body.message).to.equal("username and password required");
           done();
         });
@@ -68,6 +72,7 @@ describe("UserRoutes", () => {
         .send({ username: "TeStUsEr" })
         .end((err, res) => {
           expect(res).to.have.status(400);
+          expect(res.body).to.not.haveOwnProperty("token");
           expect(res.body.message).to.equal("username and password required");
           done();
         });
@@ -80,6 +85,73 @@ describe("UserRoutes", () => {
         .send({ username: "testuser2", password: "testpass" })
         .end((err, res) => {
           expect(res).to.have.status(201);
+          expect(res.body).to.haveOwnProperty("token");
+          done();
+        });
+    });
+  });
+
+  describe("POST /login", () => {
+    it("logs in a valid user", (done) => {
+      chai
+        .request(app)
+        .post("/login")
+        .send({ username: "testuser", password: "testpass" })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.haveOwnProperty("token");
+          done();
+        });
+    });
+
+    it("fails on missing username", (done) => {
+      chai
+        .request(app)
+        .post("/login")
+        .send({ password: "testpass" })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.not.haveOwnProperty("token");
+          expect(res.body.message).to.equal("username and password required");
+          done();
+        });
+    });
+
+    it("fails on missing password", (done) => {
+      chai
+        .request(app)
+        .post("/login")
+        .send({ username: "testuser" })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.not.haveOwnProperty("token");
+          expect(res.body.message).to.equal("username and password required");
+          done();
+        });
+    });
+
+    it("fails on invalid username", (done) => {
+      chai
+        .request(app)
+        .post("/login")
+        .send({ username: "nonexistentuser", password: "testpass" })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.not.haveOwnProperty("token");
+          expect(res.body.message).to.equal("user doesn't exist");
+          done();
+        });
+    });
+
+    it("fails on invalid password", (done) => {
+      chai
+        .request(app)
+        .post("/login")
+        .send({ username: "testuser", password: "wrongpass" })
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          expect(res.body).to.not.haveOwnProperty("token");
+          expect(res.body.message).to.equal("invalid password");
           done();
         });
     });
