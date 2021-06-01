@@ -2,6 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+// create app
+const app = express();
+
+// middleware imports
+const { UserRoutes } = require("./routes");
+
+// middleware setup
+app.use(UserRoutes);
+
 // configure mongoose
 mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
@@ -9,8 +18,6 @@ mongoose.connect(process.env.MONGODB_URL, {
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
-
-const app = express();
 
 app.listen(process.env.PORT, () => {
   console.log(`Server live on PORT ${process.env.PORT}`);
