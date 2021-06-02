@@ -9,15 +9,17 @@ const app = express();
 
 // middleware imports
 const handleErrors = require("./middleware/error");
+const isAuthenticated = require("./middleware/isAuthenticated");
 
 // configure middleware
 app.use(express.json());
 
 // route imports
-const { UserRoutes } = require("./routes");
+const { UserRoutes, TweetRoutes } = require("./routes");
 
 // routes setup
 app.use(UserRoutes);
+app.use("/tweet", isAuthenticated, TweetRoutes);
 
 // custom error middleware
 app.use(handleErrors);

@@ -1,3 +1,4 @@
 const UserRoutes = require("./UserRoutes");
+const TweetRoutes = require("./TweetRoutes");
 
-module.exports = { UserRoutes };
+module.exports = { UserRoutes, TweetRoutes };
