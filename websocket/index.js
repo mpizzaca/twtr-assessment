@@ -72,7 +72,7 @@ module.exports = function (wss) {
           });
         }
       } catch (err) {
-        console.log(`WebSocket: error processing message: ${err.message}`);
+        console.log("WebSocket: error processing message", err);
         ws.send(JSON.stringify({ message: "Error processing last message" }));
       }
     });
