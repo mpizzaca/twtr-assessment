@@ -95,8 +95,24 @@ router.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
+router.post("/:id/like", (req, res, next) => {
+  const tweetID = req.params.id;
+
+  // Get user's name to add to 'likes' array
+  User.findOne({ _id: res.locals.token.userID })
+    .then((user) => {
+      if (!user) return Promise.reject();
+      return Tweet.updateOne(
+        { _id: tweetID },
+        { $addToSet: { likes: user.username } }
+      );
+    })
+    .then(() => Tweet.findOne({ _id: tweetID }))
+    .then((tweet) => res.send(tweet))
+    .catch(next);
+});
+
 // TODO:
-// - like/unlike a tweet
 // - retweet
 // - threading
 // https://miro.com/app/board/o9J_lWzLOeE=/?moveToWidget=3074457353832666879&cot=14

@@ -141,6 +141,63 @@ describe("TweetRoutes", () => {
     });
   });
 
+  describe("POST /tweets/:id/like", () => {
+    it("requires a user to be authenticated", (done) => {
+      chai
+        .request(app)
+        .post(`/tweets/${tweetA}/like`)
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
+
+    it("fails for invalid tweet id", (done) => {
+      chai
+        .request(app)
+        .post(`/tweets/not_a_real_id/like`)
+        .set("Authorization", tokenB)
+        .end((err, res) => {
+          expect(res).to.have.status(500);
+          done();
+        });
+    });
+
+    it("adds the user's like", (done) => {
+      chai
+        .request(app)
+        .post(`/tweets/${tweetA}/like`)
+        .set("Authorization", tokenB)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.haveOwnProperty("body");
+          expect(res.body).to.haveOwnProperty("createdAt");
+          expect(res.body).to.haveOwnProperty("author");
+          expect(res.body).to.haveOwnProperty("likes");
+          expect(res.body.likes).to.have.length(1);
+          expect(res.body.likes[0]).to.equal("testuser2");
+          done();
+        });
+    });
+
+    it("doesn't duplicate likes", (done) => {
+      chai
+        .request(app)
+        .post(`/tweets/${tweetA}/like`)
+        .set("Authorization", tokenB)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.haveOwnProperty("body");
+          expect(res.body).to.haveOwnProperty("createdAt");
+          expect(res.body).to.haveOwnProperty("author");
+          expect(res.body).to.haveOwnProperty("likes");
+          expect(res.body.likes).to.have.length(1);
+          expect(res.body.likes[0]).to.equal("testuser2");
+          done();
+        });
+    });
+  });
+
   describe("PATCH /tweets/:id", () => {
     it("requires the user to be authenticated", (done) => {
       chai

@@ -17,6 +17,9 @@ const tweetSchema = new Schema({
   updatedAt: {
     type: Date,
   },
+  likes: {
+    type: [String],
+  },
 });
 
 const Tweet = mongoose.model("Tweet", tweetSchema);

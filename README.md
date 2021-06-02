@@ -101,9 +101,10 @@ Success response body:
     body: string,
     author: string,
     createdAt: date,
-    updatedAt: date?,
-  }
-]
+    updatedAt: date, // nullable
+    likes: [string],
+  },
+];
 ```
 
 ## `GET /tweets/:id`
@@ -120,7 +121,8 @@ Success response body:
   body: string,
   author: string,
   createdAt: date,
-  updatedAt: date?,
+  updatedAt: date,    // nullable
+  likes: [string],
 }
 ```
 
@@ -146,7 +148,8 @@ Success response body:
   body: string,
   author: string,
   createdAt: date,
-  updatedAt: date?,
+  updatedAt: date,    // nullable
+  likes: [string],
 }
 ```
 
@@ -174,7 +177,8 @@ Success response body:
   body: string,
   author: string,
   createdAt: date,
-  updatedAt: date?,
+  updatedAt: date,    // nullable
+  likes: [string],
 }
 ```
 
@@ -195,3 +199,22 @@ Request body:
 ```
 
 Success response status: 204
+
+## `POST /tweets/:id/like`
+
+### Like a tweet.
+
+Requires valid JWT to be set as `Authorization` header.
+
+Success response body:
+
+```js
+{
+  _id: string,
+  body: string,
+  author: string,
+  createdAt: date,
+  updatedAt: date,    // nullable
+  likes: [string],
+}
+```
