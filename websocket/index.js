@@ -13,8 +13,9 @@ module.exports = function (wss) {
   // listen for websocket connections to facilitate chat messages
   wss.on("connection", (ws) => {
     // assign new clients with a 'twtr' object containing a unique connectionID
-    ws.twtr = {};
-    ws.twtr.connectionID = connectionID++;
+    ws.twtr = {
+      connectionID: connectionID++,
+    };
     console.log(
       `WebSocket: connection initiated, connection #${ws.twtr.connectionID}`
     );
@@ -38,6 +39,7 @@ module.exports = function (wss) {
             if (!user) {
               return Promise.reject();
             }
+            // save the username on the connection object
             ws.twtr.username = user.username;
             console.log(
               `WebSocket: connection #${ws.twtr.connectionID} authenticated, user: ${ws.twtr.username}`
