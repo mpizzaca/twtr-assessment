@@ -240,14 +240,6 @@ Requires valid JWT to be set as `Authorization` header.
 
 Requires the user to be the tweet author.
 
-Request body:
-
-```js
-{
-  body: string,
-}
-```
-
 Success response status: 204
 
 ## `POST /tweets/:id/like`
