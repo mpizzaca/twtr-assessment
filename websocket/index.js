@@ -43,8 +43,10 @@ module.exports = function (wss) {
           });
         } else if (msg.type === messageTypes.CHAT_MESSAGE) {
           // message requires the sender be authenticated, and must contain recipient and content
-          if (!ws.twtr.userID || !msg.recipient || !msg.content) {
-            throw Error();
+          if (!ws.twtr.userID || !msg.recipient || !msg.message) {
+            throw Error(
+              "must authenticate websocket session, and provide recipient and message"
+            );
           }
           // get recipients userID
           User.findOne({ username: msg.recipient }).then((user) => {
@@ -58,7 +60,7 @@ module.exports = function (wss) {
                 client.send(
                   JSON.stringify({
                     sender: ws.twtr.username,
-                    message: msg.content,
+                    message: msg.message,
                   })
                 );
               }

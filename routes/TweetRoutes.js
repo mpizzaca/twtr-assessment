@@ -95,6 +95,7 @@ router.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
+// Like a tweet
 router.post("/:id/like", (req, res, next) => {
   const tweetID = req.params.id;
 
@@ -112,6 +113,7 @@ router.post("/:id/like", (req, res, next) => {
     .catch(next);
 });
 
+// Retweet a tweet
 router.post("/:id/retweet", (req, res, next) => {
   const tweetID = req.params.id;
 
@@ -129,9 +131,5 @@ router.post("/:id/retweet", (req, res, next) => {
     .then((tweet) => res.send(tweet))
     .catch(next);
 });
-
-// TODO:
-// - threading
-// https://miro.com/app/board/o9J_lWzLOeE=/?moveToWidget=3074457353832666879&cot=14
 
 module.exports = router;

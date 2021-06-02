@@ -25,7 +25,7 @@ URL: `ws://localhost:3000`
 
 ```js
 {
-  "type": "authentication",
+  "type": "authenticate",
   "token": "..."
 }
 ```
@@ -39,6 +39,40 @@ URL: `ws://localhost:3000`
   "message": "Hey tom!",
 }
 ```
+
+## Try It
+
+Initiate two separate websocket connections.
+
+Authenticate 'tom' in websocket connection 1 by sending:
+
+```js
+{
+  "type": "authenticate",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MGI3OTdiMDZlZTA1MDE1YWRjMDNiY2QiLCJpYXQiOjE2MjI2NDQ2NTd9.Y6z6sPtTh7ML7QymSxc2vqW0if5JjtJjA4cr8LHouBI"
+}
+```
+
+Authenticate 'mary' in websocket connection 2 by sending:
+
+```js
+{
+  "type": "authenticate",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MGI3OTg0NDZlZTA1MDE1YWRjMDNiY2UiLCJpYXQiOjE2MjI2NDQ4MDR9.vfw5TzowH_Tg0SYr-Mi5MLFWAIOG7Pa2lXQSRIKc058"
+}
+```
+
+Have 'tom' send 'mary' a message from websocket connection 1 by sending:
+
+```js
+{
+  "type": "chat_message",
+  "recipient": "mary",
+  "message": "Hey Mary!"
+}
+```
+
+'mary' will receive the message in websocket connection 2.
 
 ---
 
