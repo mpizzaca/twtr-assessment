@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const WebSocket = require("ws");
+
 require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
 // create app
@@ -17,7 +19,7 @@ const { UserRoutes } = require("./routes");
 // routes setup
 app.use(UserRoutes);
 
-// custom error middleware (must be last)
+// custom error middleware
 app.use(handleErrors);
 
 // configure mongoose
@@ -28,8 +30,16 @@ mongoose.connect(process.env.MONGODB_URL, {
   useUnifiedTopology: true,
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server live on PORT ${process.env.PORT}`);
+// configure websockets
+// use http server for webhook support
+const server = require("http").Server(app);
+const wss = new WebSocket.Server({ server });
+require("./websocket")(wss);
+
+server.listen(process.env.PORT, () => {
+  console.log(
+    `Server live on PORT ${process.env.PORT} in ${process.env.NODE_ENV} mode`
+  );
 });
 
-module.exports = app;
+module.exports = server;
