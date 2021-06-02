@@ -1,5 +1,17 @@
 Simple twitter API clone with websocket-enabled user chat. Utilizes JSON Web Tokens (JWT) for user authentication and session management.
 
+Server: Node/Express
+
+Database: MongoDB
+
+---
+
+## Setup
+
+1. `npm i`: Install depenencies
+
+2. Copy `.env.developement` and `.env.test` to project root (provided separately).
+
 ---
 
 ## Commands
