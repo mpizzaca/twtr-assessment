@@ -19,7 +19,7 @@ const { UserRoutes, TweetRoutes } = require("./routes");
 
 // routes setup
 app.use(UserRoutes);
-app.use("/tweet", isAuthenticated, TweetRoutes);
+app.use("/tweets", isAuthenticated, TweetRoutes);
 
 // custom error middleware
 app.use(handleErrors);

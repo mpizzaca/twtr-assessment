@@ -65,14 +65,6 @@ Success response body:
 }
 ```
 
-Error response body:
-
-```js
-{
-  message: string,
-}
-```
-
 ## `POST /register`
 
 ### Registers a new user.
@@ -94,10 +86,112 @@ Success response body:
 }
 ```
 
-Error response body:
+## `GET /tweets`
+
+### Get all tweets.
+
+Requires valid JWT to be set as `Authorization` header.
+
+Success response body:
+
+```js
+[
+  {
+    _id: string,
+    body: string,
+    author: string,
+    createdAt: date,
+    updatedAt: date?,
+  }
+]
+```
+
+## `GET /tweets/:id`
+
+### Get a single tweet.
+
+Requires valid JWT to be set as `Authorization` header.
+
+Success response body:
 
 ```js
 {
-  message: string,
+  _id: string,
+  body: string,
+  author: string,
+  createdAt: date,
+  updatedAt: date?,
 }
 ```
+
+## `POST /tweets`
+
+### Post a tweet.
+
+Requires valid JWT to be set as `Authorization` header.
+
+Request body:
+
+```js
+{
+  body: string,
+}
+```
+
+Success response body:
+
+```js
+{
+  _id: string,
+  body: string,
+  author: string,
+  createdAt: date,
+  updatedAt: date?,
+}
+```
+
+## `PATCH /tweets/:id`
+
+### Update a single tweet.
+
+Requires valid JWT to be set as `Authorization` header.
+
+Requires the user to be the tweet author.
+
+Request body:
+
+```js
+{
+  body: string,
+}
+```
+
+Success response body:
+
+```js
+{
+  _id: string,
+  body: string,
+  author: string,
+  createdAt: date,
+  updatedAt: date?,
+}
+```
+
+## `DELETE /tweets/:id`
+
+### Deletes a single tweet.
+
+Requires valid JWT to be set as `Authorization` header.
+
+Requires the user to be the tweet author.
+
+Request body:
+
+```js
+{
+  body: string,
+}
+```
+
+Success response status: 204
