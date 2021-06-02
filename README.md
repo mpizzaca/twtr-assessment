@@ -84,6 +84,8 @@ Have 'tom' send 'mary' a message from websocket connection 1 by sending:
 
 'mary' will receive the message in websocket connection 2.
 
+![websocket test](./docs/websocket_test.png)
+
 ---
 
 ## API Documentation
