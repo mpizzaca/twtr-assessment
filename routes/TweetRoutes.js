@@ -112,8 +112,25 @@ router.post("/:id/like", (req, res, next) => {
     .catch(next);
 });
 
+router.post("/:id/retweet", (req, res, next) => {
+  const tweetID = req.params.id;
+
+  Promise.all([
+    User.findOne({ _id: res.locals.token.userID }),
+    Tweet.findOne({ _id: tweetID }),
+  ])
+    .then(([user, tweet]) =>
+      Tweet.create({
+        body: tweet.body,
+        author: user.username,
+        retweet: tweet._id,
+      })
+    )
+    .then((tweet) => res.send(tweet))
+    .catch(next);
+});
+
 // TODO:
-// - retweet
 // - threading
 // https://miro.com/app/board/o9J_lWzLOeE=/?moveToWidget=3074457353832666879&cot=14
 

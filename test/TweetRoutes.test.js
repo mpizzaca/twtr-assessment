@@ -297,4 +297,43 @@ describe("TweetRoutes", () => {
         });
     });
   });
+
+  describe("POST /tweets/:id/retweet", () => {
+    it("requires a user to be authenticated", (done) => {
+      chai
+        .request(app)
+        .post(`/tweets/${tweetA}/retweet`)
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
+
+    it("fails for invalid tweet id", (done) => {
+      chai
+        .request(app)
+        .post(`/tweets/not_a_real_id/retweet`)
+        .set("Authorization", tokenB)
+        .end((err, res) => {
+          expect(res).to.have.status(500);
+          done();
+        });
+    });
+
+    it("creates a new tweet, linking to the original", (done) => {
+      chai
+        .request(app)
+        .post(`/tweets/${tweetB}/retweet`)
+        .set("Authorization", tokenA)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.haveOwnProperty("body");
+          expect(res.body).to.haveOwnProperty("createdAt");
+          expect(res.body).to.haveOwnProperty("author");
+          expect(res.body).to.haveOwnProperty("retweet");
+          expect(res.body.retweet).to.equal(tweetB);
+          done();
+        });
+    });
+  });
 });

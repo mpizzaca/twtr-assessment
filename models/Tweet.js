@@ -20,6 +20,9 @@ const tweetSchema = new Schema({
   likes: {
     type: [String],
   },
+  retweet: {
+    type: String,
+  },
 });
 
 const Tweet = mongoose.model("Tweet", tweetSchema);

@@ -103,6 +103,7 @@ Success response body:
     createdAt: date,
     updatedAt: date, // nullable
     likes: [string],
+    retweet: string, // points to original tweet ID if this is a retweet. nullable.
   },
 ];
 ```
@@ -121,8 +122,9 @@ Success response body:
   body: string,
   author: string,
   createdAt: date,
-  updatedAt: date,    // nullable
+  updatedAt: date, // nullable
   likes: [string],
+  retweet: string, // points to original tweet ID if this is a retweet. nullable.
 }
 ```
 
@@ -148,8 +150,9 @@ Success response body:
   body: string,
   author: string,
   createdAt: date,
-  updatedAt: date,    // nullable
+  updatedAt: date, // nullable
   likes: [string],
+  retweet: string, // points to original tweet ID if this is a retweet. nullable.
 }
 ```
 
@@ -177,8 +180,9 @@ Success response body:
   body: string,
   author: string,
   createdAt: date,
-  updatedAt: date,    // nullable
+  updatedAt: date, // nullable
   likes: [string],
+  retweet: string, // points to original tweet ID if this is a retweet. nullable.
 }
 ```
 
@@ -214,7 +218,28 @@ Success response body:
   body: string,
   author: string,
   createdAt: date,
-  updatedAt: date,    // nullable
+  updatedAt: date, // nullable
   likes: [string],
+  retweet: string, // points to original tweet ID if this is a retweet. nullable.
+}
+```
+
+## `POST /tweets/:id/retweet`
+
+### Retweets a tweet.
+
+Requires valid JWT to be set as `Authorization` header.
+
+Success response body:
+
+```js
+{
+  _id: string,
+  body: string,
+  author: string,
+  createdAt: date,
+  updatedAt: date, // nullable
+  likes: [string],
+  retweet: string, // points to original tweet ID if this is a retweet. nullable.
 }
 ```
