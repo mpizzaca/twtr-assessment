@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const WebSocket = require("ws");
 
+// configure environment variables
 require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
 // create app
@@ -32,16 +33,17 @@ mongoose.connect(process.env.MONGODB_URL, {
   useUnifiedTopology: true,
 });
 
-// configure websockets
-// use http server for webhook support
+// configure websockets for chat - use http server for websocket support
 const server = require("http").Server(app);
 const wss = new WebSocket.Server({ server });
 require("./websocket")(wss);
 
+// run the server
 server.listen(process.env.PORT, () => {
   console.log(
     `Server live on PORT ${process.env.PORT} in ${process.env.NODE_ENV} mode`
   );
 });
 
+// export server for chai tests
 module.exports = server;

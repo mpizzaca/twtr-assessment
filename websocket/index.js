@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
+// This code is messy but works given time constraints.
+// Would implement a more robust solution for anything production-facing.
 module.exports = function (wss) {
   let connectionID = 0;
   const messageTypes = {
@@ -10,7 +12,7 @@ module.exports = function (wss) {
 
   // listen for websocket connections to facilitate chat messages
   wss.on("connection", (ws) => {
-    // assign new clients with a 'twtr' object containing a connectionID
+    // assign new clients with a 'twtr' object containing a unique connectionID
     ws.twtr = {};
     ws.twtr.connectionID = connectionID++;
     console.log(

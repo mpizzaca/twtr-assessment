@@ -26,10 +26,6 @@ Database: MongoDB
 
 User's can chat by connecting to the websocket server and authenticating their session via JWT.
 
-Note: [WebSocket King Client](https://chrome.google.com/webstore/detail/websocket-king-client/cbcbkhdmedgianpaifchdaddpnmgnknn?hl=en) is a conveient chrome extension to connect to and test the websocket chat.
-
-URL: `ws://localhost:3000`
-
 1. Authenticate websocket connection
 
 - get JWT from `POST /login` response
@@ -54,7 +50,9 @@ URL: `ws://localhost:3000`
 
 ## Try It
 
-Initiate two separate websocket connections.
+Initiate two separate websocket connections. URL: `ws://localhost:3000`
+
+Note: [WebSocket King Client](https://chrome.google.com/webstore/detail/websocket-king-client/cbcbkhdmedgianpaifchdaddpnmgnknn?hl=en) is a conveient chrome extension to connect to and test the websocket chat.
 
 Authenticate 'tom' in websocket connection 1 by sending:
 
